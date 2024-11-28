@@ -1,34 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import StarIcon from '@mui/icons-material/Star';
+import Axios from 'axios';
 
 
-
-const products = [
-    {
-      id: 1,
-      name: 'card less t shirt contton balck popcorn ggjsdgb ',
-      href: '#',
-      imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg',
-      imageAlt: "Front of men's Basic Tee in black.",
-      price: '1800.00',
-      color: 'Black',
-      installment:'600.00',
-    },
-    {
-        id: 1,
-        name: 'card less t shirt contton balck popcorn ggjsdgb ',
-        href: '#',
-        imageSrc: 'https://tailwindui.com/plus/img/ecommerce-images/product-page-01-related-product-01.jpg',
-        imageAlt: "Front of men's Basic Tee in black.",
-        price: '1800.00',
-        color: 'Black',
-        installment:'600.00',
-      },
-    // More products...
-  ]
-  
 
 const Productlist = () => {
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(()=>{
+        getProducts();
+    },[])
+
+    const getProducts = () => {
+        Axios.get("http://localhost:8080/api/v1/getproduct")
+            .then(response => {
+                setProducts(response.data);
+
+            })
+            .catch(error => {
+                console.error("Axios error :", error)
+            })
+    }
+
+
   return (
     <div className="bg-white">
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -36,10 +31,10 @@ const Productlist = () => {
 
       <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         {products.map((product) => (
-          <div key={product.id} className="group relative">
+          <div key={product.productid} className="group relative">
             <img
-              alt={product.imageAlt}
-              src={product.imageSrc}
+              alt={product.description}
+              src={`data:${product.imageType};base64,${product.imageDate}`}
               className="aspect-square w-[235px] h-[245px] rounded-3xl bg-gray-200 object-cover group-hover:opacity-75 "
             />
             <div className="mt-4 grid text-left justify-between">
@@ -47,7 +42,7 @@ const Productlist = () => {
                 <h3 className="text-[20px] text-black leading-none">
                   <a href={product.href}>
                     <span aria-hidden="true" className="absolute inset-0" />
-                    {product.name}
+                    {product.productname}
                   </a>
                 </h3>
                 {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
@@ -61,7 +56,7 @@ const Productlist = () => {
                 </div>
               <p className="text-[24px] font-medium text-gray-900">LKR {product.price}</p>
               <p className='bg-[#8DD4F1] w-[90px]'>Installment</p>
-              <p className="text-[24px] font-medium text-gray-900">LKR {product.installment}</p>
+              <p className="text-[24px] font-medium text-gray-900">LKR {product.price}</p>
             </div>
           </div>
         ))}
