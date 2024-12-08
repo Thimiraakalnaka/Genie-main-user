@@ -4,11 +4,17 @@ import Footer from './layouts/Footer';
 import Navbar from './layouts/Navbar';
 import Productview from './pages/Productview';
 import Homepage from './pages/Homepage';
+import { useState } from 'react';
+import Login from './layouts/Login';
 
 function App() {
+
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar setOpen={setOpen}/>
+      {open && <Login open={open} setOpen={setOpen}/>}
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Homepage/>}/>
