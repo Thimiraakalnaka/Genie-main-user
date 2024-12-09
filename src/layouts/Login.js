@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import Logo from '../assets/logo.jpg';
+import Register from './Register';
 
 const Login = ({open, setOpen}) => {
+  const [showRegister, setShowRegister] = useState(false);
 
   return (
     <div>
-        <Dialog open={open} onClose={setOpen} className="relative z-10">
+        <Dialog open={open} onClose={()=>setOpen(false)} className="relative z-10">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500/75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -19,6 +21,9 @@ const Login = ({open, setOpen}) => {
             className="relative transform overflow-hidden w-[400px] rounded-[50px] bg-white border-[#06B2F6] border-4 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in  data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div className="bg-white px-4 py-5 ">
+            {showRegister ? (
+                  <Register open={open} setOpen={setOpen} />
+                ) : (
               <div className="">
                 <div className="grid mt-3 text-center">
                   
@@ -42,10 +47,20 @@ const Login = ({open, setOpen}) => {
                     <button className='bg-[#8DD4F1] w-48 h-6 text-center font-bold rounded-3xl mb-3'>
                       Sign in
                     </button>
-                    <h1 className='mb-10'>New to Genie? <a href='#'>Create account</a></h1>
+                    <h1 className="mb-10">
+                          New to Genie?{' '}
+                          <span
+                            className="text-[#06B2F6] font-bold cursor-pointer"
+                            onClick={() => setShowRegister(true)}
+                          >
+                            Create account
+                          </span>
+                        </h1>
+
                   </div>
                 </div>
               </div>
+                )}
             </div>
             
           </DialogPanel>

@@ -12,17 +12,17 @@ function App() {
   const [open, setOpen] = useState(false);
 
   return (
+    <BrowserRouter>
     <div className="App">
       <Navbar setOpen={setOpen}/>
       {open && <Login open={open} setOpen={setOpen}/>}
-      <BrowserRouter>
         <Routes>
           <Route path='/' element={<Homepage/>}/>
           <Route path='/productview/:productId' element={<Productview/>}/>
         </Routes>
-      </BrowserRouter>
       <Footer/>
     </div>
+    </BrowserRouter>
   );
 }
 
