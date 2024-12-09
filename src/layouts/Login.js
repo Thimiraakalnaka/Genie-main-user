@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import Logo from '../assets/logo.jpg';
-import Register from './Register';
 
-const Login = ({open, setOpen}) => {
-  const [showRegister, setShowRegister] = useState(false);
+const Login = ({open, setOpen,  toggleToRegister}) => {
 
   return (
     <div>
@@ -21,9 +19,7 @@ const Login = ({open, setOpen}) => {
             className="relative transform overflow-hidden w-[400px] rounded-[50px] bg-white border-[#06B2F6] border-4 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in  data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div className="bg-white px-4 py-5 ">
-            {showRegister ? (
-                  <Register open={open} setOpen={setOpen} />
-                ) : (
+               
               <div className="">
                 <div className="grid mt-3 text-center">
                   
@@ -51,7 +47,7 @@ const Login = ({open, setOpen}) => {
                           New to Genie?{' '}
                           <span
                             className="text-[#06B2F6] font-bold cursor-pointer"
-                            onClick={() => setShowRegister(true)}
+                            onClick={() => toggleToRegister(true)}
                           >
                             Create account
                           </span>
@@ -60,7 +56,6 @@ const Login = ({open, setOpen}) => {
                   </div>
                 </div>
               </div>
-                )}
             </div>
             
           </DialogPanel>
