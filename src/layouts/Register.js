@@ -3,6 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import Logo from '../assets/logo.jpg';
 import Axios from 'axios';
 import GreenNotify from './GreenNotify';
+import RedNotify from './RedNotify';
 
 const Register = ({open, setOpen, toggleToLogin}) => {
 
@@ -18,6 +19,7 @@ const Register = ({open, setOpen, toggleToLogin}) => {
     password: ""
   });
   const[successMsg,setSuccessMsg]=useState("");
+  const[errMsg,setErrMsg]=useState("");
 
 
   const registerUser = () => {
@@ -37,6 +39,7 @@ const Register = ({open, setOpen, toggleToLogin}) => {
           setSuccessMsg("Registration succuessfull !")
         }).catch((error)=>{
           console.log("Axios error user regiter : ", error);
+          setErrMsg("Something went wrong");
         })
 
     }
@@ -174,6 +177,7 @@ const Register = ({open, setOpen, toggleToLogin}) => {
         </div>
       </Dialog>
      {successMsg && <GreenNotify successMsg={successMsg} setSuccessMsg={setSuccessMsg} />}
+     {errMsg && <RedNotify errMsg={errMsg} setErrMsg={setErrMsg}/>}
     </div>
   )
 }
