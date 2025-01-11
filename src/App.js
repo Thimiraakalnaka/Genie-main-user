@@ -7,6 +7,7 @@ import Homepage from './pages/Homepage';
 import { useState } from 'react';
 import Login from './layouts/Login';
 import Register from './layouts/Register';
+import Addtocart from './layouts/Addtocart';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage/>}/>
           <Route path='/productview/:productId' element={<Productview/>}/>
+          <Route path="/addtocart" element={<Addtocart/>}/>
         </Routes>
       <Footer/>
     </div>
