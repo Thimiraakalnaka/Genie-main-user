@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import StarIcon from '@mui/icons-material/Star';
-import Axios from 'axios';
+// import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../axiosConfig';
 
 
 
@@ -14,7 +15,7 @@ const Productlist = () => {
     },[])
 
     const getProducts = () => {
-        Axios.get("http://localhost:8080/api/v1/getproduct")
+        axiosInstance.get("http://localhost:8080/api/v1/getproduct")
             .then(response => {
                 setProducts(response.data);
 

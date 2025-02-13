@@ -1,8 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import Logo from '../assets/logo.jpg';
+import Axios from 'axios';
+import { useAuth } from './AuthContext';
+import GreenNotify from './GreenNotify';
+import RedNotify from './RedNotify';
 
 const Login = ({open, setOpen,  toggleToRegister}) => {
+
+  const[email,setEmail]=useState("");
+  const[password,setPassword]=useState("");
+  const[successMsg,setSuccessMsg]=useState("");
+  const[errMsg,setErrMsg]=useState("");
+
+  // const navigate = useNavigate();
+
+    const {login} = useAuth();
+
+    const handleonchange = (e) =>{
+        const { name, value } = e.target;
+        if (name === 'email') {
+            setEmail(value);
+        } else if (name === 'password') {
+            setPassword(value);
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const loginData = {
+            email,
+            password
+        }
+        Axios.post('http://localhost:8080/api/v1/login', loginData)
+            .then(res => {
+                console.log(res.data);
+                login();
+                setOpen(false);
+                setSuccessMsg("Login Successfull")
+                // navigate('/dashboard');
+            })
+            .catch(err => {
+                console.error(err);
+                setErrMsg("Email or Password is Invalid");
+            });
+    }
+  
 
   return (
     <div>
@@ -32,15 +75,15 @@ const Login = ({open, setOpen,  toggleToRegister}) => {
                     Sign in to your account
                   </DialogTitle>
                   <div className="grid py-5 mx-6">
-                    <input className='bg-[#D9D9D9] my-2 h-8 rounded-md' placeholder='E mail'/>
-                    <input className='bg-[#D9D9D9] my-2 rounded-md h-8' placeholder='Password'/>
+                    <input className='bg-[#D9D9D9] my-2 h-8 rounded-md' placeholder='E mail' name='email' value={email} onChange={handleonchange}/>
+                    <input className='bg-[#D9D9D9] my-2 rounded-md h-8' placeholder='Password' name='password'value={password} onChange={handleonchange}/>
 
                     <p className="font-medium text-[9px] text-gray-500 text-left mt-4">
                       By selecting Create personal account, you agree to our User Agreement and acknowledge reading our User Privacy Notice.
                     </p>
                   </div>
                   <div>
-                    <button className='bg-[#8DD4F1] w-48 h-6 text-center font-bold rounded-3xl mb-3'>
+                    <button className='bg-[#8DD4F1] w-48 h-6 text-center font-bold rounded-3xl mb-3' onClick={handleSubmit}>
                       Sign in
                     </button>
                     <h1 className="mb-10">
@@ -62,6 +105,8 @@ const Login = ({open, setOpen,  toggleToRegister}) => {
         </div>
       </div>
     </Dialog>
+    {successMsg && <GreenNotify successMsg={successMsg} setSuccessMsg={setSuccessMsg} />}
+     {errMsg && <RedNotify errMsg={errMsg} setErrMsg={setErrMsg}/>}
     </div>
   )
 }

@@ -32,7 +32,7 @@ const Register = ({open, setOpen, toggleToLogin}) => {
         password: password
       }
   
-      Axios.post('http://localhost:8080/api/v1/adduser',payload)
+      Axios.post('http://localhost:8080/api/v1/register',payload)
         .then(()=>{
           clearForm();
           setTimeout(() => toggleToLogin(true), 3000);
